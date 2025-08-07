@@ -54,7 +54,7 @@ export default function Home() {
             Get In Touch
           </h2>
           <p className="text-lg text-gray-600 mb-8">
-            Ready to work together? We'd love to hear from you.
+            Ready to work together? We&apos;d love to hear from you.
           </p>
           <a 
             href="mailto:hello@hnsndigital.com"
