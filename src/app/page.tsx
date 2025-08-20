@@ -1,155 +1,377 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function Home() {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [email, setEmail] = useState('');
 
-  const toggleFaq = (index: number) => {
-    setOpenFaq(openFaq === index ? null : index);
+  const openCalendly = () => {
+    window.open('https://calendly.com/keegan-weblaunchlab/30min', '_blank');
   };
 
-  useEffect(() => {
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-
-    const fadeElements = document.querySelectorAll('.fade-in');
-    fadeElements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
+  const handlePricingView = () => {
+    // Track pricing views if needed
+  };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen gradient-hero">
       {/* Header */}
-      <header className="fixed top-0 w-full bg-white/95 header-blur border-b border-gray-100 z-50">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-blue-900">HNSN Digital</h1>
-            <p className="text-sm text-gray-600">Mortgage Appointment Engine</p>
+      <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/60 sticky top-0 z-50 shadow-premium">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center">
+              <div className="w-9 h-9 bg-gradient-to-br from-slate-900 to-slate-700 rounded-xl flex items-center justify-center mr-3 shadow-lg">
+                <span className="text-white font-bold text-sm">H</span>
+              </div>
+              <div>
+                <span className="text-xl font-semibold heading-premium tracking-tight">HNSN Digital</span>
+                <p className="text-xs text-slate-500">Mortgage Appointment Engine</p>
+              </div>
+            </div>
+            <nav className="hidden md:flex items-center space-x-8">
+              <a href="#how-it-works" className="text-slate-600 hover:text-slate-900 text-sm font-medium transition-all duration-200 hover:scale-105">
+                How It Works
+              </a>
+              <a href="#pricing" className="text-slate-600 hover:text-slate-900 text-sm font-medium transition-all duration-200 hover:scale-105" onMouseEnter={handlePricingView}>
+                Pricing
+              </a>
+              <a href="#faq" className="text-slate-600 hover:text-slate-900 text-sm font-medium transition-all duration-200 hover:scale-105">
+                FAQ
+              </a>
+              <button onClick={openCalendly} className="btn-primary text-sm">
+                Book Strategy Session
+              </button>
+            </nav>
           </div>
-          <a href="#contact" className="btn-primary">
-            Book Strategy Call
-          </a>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-16 px-4 bg-gradient-to-br from-blue-50 to-white">
-        <div className="container mx-auto text-center">
-          <div className="max-w-4xl mx-auto fade-in">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-blue-900 mb-6 leading-tight">
-              Get 15-75 Qualified Borrower Consultations Per Month
-            </h1>
-            <p className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Done-for-you funnels + ads + nurture. All-inclusive pricing. 3-month commitment.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <a href="#contact" className="btn-primary text-lg px-8 py-4 pulse-cta">
-                Book Strategy Call
-              </a>
-              <a href="#pricing" className="btn-secondary text-lg px-8 py-4">
-                View Pricing
-              </a>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24">
+        <div className="text-center animate-fade-in">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold heading-premium mb-8 leading-[0.95] tracking-tighter">
+            Get 15-75 Qualified
+            <span className="block bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600 bg-clip-text text-transparent">
+              Borrower Consultations Per Month
+            </span>
+          </h1>
+          <p className="text-xl md:text-2xl text-slate-600 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
+            Done-for-you funnels + ads + nurture. All-inclusive pricing. 3-month commitment. NMLS/EHL compliant.
+          </p>
+
+          {/* Lead Capture Form */}
+          <div id="hero-form" className="max-w-md mx-auto mb-16 animate-slide-up">
+            <div className="space-y-5">
+              <input
+                type="email"
+                placeholder="Enter your business email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="form-input w-full px-6 py-4 text-base"
+              />
+              <button onClick={openCalendly} className="btn-primary w-full text-base font-semibold py-4">
+                Book Your Free Strategy Session
+              </button>
             </div>
-            <div className="bg-white rounded-lg p-6 shadow-lg border border-gray-100 max-w-2xl mx-auto fade-in stagger-1">
-              <p className="text-gray-700 font-medium">
-                ✅ All ad spend included • ✅ Mobile-first funnels • ✅ CRM automation
+            <p className="text-sm text-slate-500 mt-4 font-medium">✓ NMLS compliant ✓ 7-day launch guarantee</p>
+          </div>
+
+          {/* Social Proof */}
+          <div className="flex justify-center items-center space-x-16 mb-20 animate-fade-in">
+            <div className="text-center">
+              <div className="text-3xl font-bold heading-premium mb-1">7 Days</div>
+              <div className="text-sm text-slate-500 font-medium">Launch guarantee</div>
+            </div>
+            <div className="w-px h-16 bg-gradient-to-b from-transparent via-slate-300 to-transparent"></div>
+            <div className="text-center">
+              <div className="text-3xl font-bold heading-premium mb-1">$2K+</div>
+              <div className="text-sm text-slate-500 font-medium">Monthly packages</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Value Proposition Section */}
+      <section className="bg-white py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold heading-premium mb-6 tracking-tight">
+              Finally, <span className="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">Predictable Lead Flow</span>
+            </h2>
+            <p className="text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto font-medium leading-relaxed">
+              Stop the feast-or-famine cycle. Get consistent, qualified mortgage consultations booked directly to your calendar every month.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8 mb-16">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-xl mb-6">
+                <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold heading-premium mb-4 text-red-600">The Problem</h3>
+              <p className="text-slate-600 leading-relaxed">
+                Inconsistent pipeline, erratic lead sources, and marketing that drains budget without delivering qualified consultations.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-xl mb-6">
+                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold heading-premium mb-4 text-blue-600">Our Solution</h3>
+              <p className="text-slate-600 leading-relaxed">
+                Complete consultation funnel + expert ad management. Continuous stream of qualified prospects directly to your calendar.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-xl mb-6">
+                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold heading-premium mb-4 text-green-600">Your Result</h3>
+              <p className="text-slate-600 leading-relaxed">
+                Predictable client acquisition. Steady business growth. The &quot;oxygen&quot; for your sustained mortgage business success.
               </p>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* What's Included Section */}
-      <section id="included" className="section-padding bg-white">
-        <div className="container mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-blue-900 text-center mb-16 fade-in">
-            What&apos;s Included in Every Package
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                icon: "📱",
-                title: "Mobile-First Quiz Funnel",
-                description: "Perspective-optimized funnel that converts prospects into qualified consultations"
-              },
-              {
-                icon: "🎯",
-                title: "Pre-Consultation Nurture",
-                description: "12+ touchpoints to build trust and increase show-up rates"
-              },
-              {
-                icon: "📊",
-                title: "Facebook/Google Ad Management",
-                description: "Professional ad campaigns with targeting and optimization"
-              },
-              {
-                icon: "⚙️",
-                title: "CRM Setup & Automation",
-                description: "Complete lead management system with automated workflows"
-              },
-              {
-                icon: "📈",
-                title: "Monthly Reporting Dashboard",
-                description: "Track your consultations, conversion rates, and ROI"
-              },
-              {
-                icon: "💰",
-                title: "Ad Spend Included",
-                description: "All advertising costs included in your monthly fee"
-              }
-            ].map((feature, index) => (
-              <div key={index} className="bg-gray-50 rounded-lg p-6 text-center fade-in">
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold text-blue-900 mb-3">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
-              </div>
-            ))}
+          <div className="bg-gradient-to-r from-slate-50 to-blue-50 rounded-2xl p-8 md:p-12">
+            <div className="text-center">
+              <h3 className="text-2xl md:text-3xl font-bold heading-premium mb-4">
+                Ready to Transform Your Business?
+              </h3>
+              <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
+                Join MLOs who&apos;ve moved from unpredictable lead generation to consistent, high-quality consultations every month.
+              </p>
+              <button onClick={openCalendly} className="btn-primary text-base font-semibold py-4 px-8">
+                Get Your Free Strategy Session
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Qualified Consultation Definition */}
-      <section className="section-padding bg-blue-50">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-blue-900 mb-8">
-            What Is a &quot;Qualified Consultation&quot;?
-          </h2>
-          <div className="bg-white rounded-lg p-8 shadow-lg max-w-3xl mx-auto">
-            <div className="grid sm:grid-cols-2 gap-6 text-left">
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  <span>Located in your licensed state(s)</span>
+      {/* What You Get Section */}
+      <section className="bg-white/50 backdrop-blur-sm py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold heading-premium mb-6 tracking-tight">
+              What You Get
+            </h2>
+            <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto font-medium leading-relaxed">
+              Complete consultation funnel setup + ongoing lead generation management
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* One-time Setup */}
+            <div className="card-elevated p-10">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl mb-6">
+                  <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
                 </div>
-                <div className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  <span>Purchase/refi intent within 90 days</span>
+                <h3 className="text-2xl font-bold heading-premium mb-2">Custom Consultation Funnel Setup</h3>
+                <p className="text-slate-500 font-medium">(One-time fee)</p>
+              </div>
+              
+              <ul className="space-y-4 text-slate-600">
+                <li className="flex items-start">
+                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <strong>High-Converting 1-Page Funnel:</strong> Optimized for lead capture and mobile performance, utilizing our battle-tested, proprietary templates.
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <strong>Click-to-Call Functionality:</strong> Prospects can call you directly from their mobile device.
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <strong>Calendly Integration:</strong> Seamlessly book consultations onto your calendar.
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <strong>NMLS & EHL Compliant Footer:</strong> Professionally display all necessary disclosures.
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <strong>GA4 Event Tracking:</strong> See exactly how your funnel performs.
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            {/* Recurring Service */}
+            <div className="card-elevated p-10 border-2 border-blue-200 bg-blue-50/50">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl mb-6">
+                  <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
                 </div>
-                <div className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  <span>Self-reported credit score 620+</span>
+                <h3 className="text-2xl font-bold heading-premium mb-2 text-blue-600">Recurring Lead Generation & Ad Management</h3>
+                <p className="text-slate-500 font-medium">(Monthly fee, ad spend included)</p>
+              </div>
+              
+              <ul className="space-y-4 text-slate-600">
+                <li className="flex items-start">
+                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <strong>Continuous Qualified Lead Flow:</strong> Strategic ad campaigns targeting ideal prospects actively seeking home loan information.
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <strong>Expert Campaign Management:</strong> Ongoing optimization to maximize lead quality and minimize cost-per-consultation.
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <strong>Private Client Dashboard:</strong> Full transparency into campaign performance, ad spend, and leads generated.
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section id="how-it-works" className="gradient-subtle py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold heading-premium mb-6 tracking-tight">
+              How It Works
+            </h2>
+            <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto font-medium leading-relaxed">
+              Simple process to get your consultation engine running
+            </p>
+          </div>
+
+          {/* Bento Grid Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Step 1 */}
+            <div className="card-elevated p-8 hover:shadow-premium-lg transition-all duration-500 group">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-blue-700 font-bold text-lg">1</span>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold heading-premium mb-3">Free Strategy Session</h3>
+                  <p className="text-slate-600 leading-relaxed">Let&apos;s discuss your goals, target audience, and current lead gen challenges.</p>
                 </div>
               </div>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  <span>Completed quiz + booked consultation</span>
+            </div>
+
+            {/* Step 2 */}
+            <div className="card-elevated p-8 hover:shadow-premium-lg transition-all duration-500 group">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-blue-700 font-bold text-lg">2</span>
+                  </div>
                 </div>
-                <div className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  <span>Provided contact info + timeline</span>
+                <div>
+                  <h3 className="text-xl font-bold heading-premium mb-3">Funnel Setup Investment</h3>
+                  <p className="text-slate-600 leading-relaxed">Secure your build slot with a deposit for your custom consultation funnel. Complete our simple intake.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="card-elevated p-8 hover:shadow-premium-lg transition-all duration-500 group">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-blue-700 font-bold text-lg">3</span>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold heading-premium mb-3">Rapid Funnel Build & Launch</h3>
+                  <p className="text-slate-600 leading-relaxed">We build your high-converting funnel (utilizing our proprietary templates) and launch it live in 7 business days.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className="card-elevated p-8 hover:shadow-premium-lg transition-all duration-500 group">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-blue-700 font-bold text-lg">4</span>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold heading-premium mb-3">Recurring Lead Generation Begins</h3>
+                  <p className="text-slate-600 leading-relaxed">We activate and manage your ad campaigns, driving continuous, qualified traffic to your new funnel.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Step 5 - Full Width Bottom */}
+          <div className="mt-6">
+            <div className="card-elevated p-8 hover:shadow-premium-lg transition-all duration-500 group bg-gradient-to-r from-blue-50 to-slate-50">
+              <div className="flex items-start space-x-4 justify-center text-center md:text-left md:justify-start">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-blue-700 font-bold text-lg">5</span>
+                  </div>
+                </div>
+                <div className="max-w-4xl">
+                  <h3 className="text-xl font-bold heading-premium mb-3">Ongoing Optimization & Growth</h3>
+                  <p className="text-slate-600 leading-relaxed">We continuously monitor and optimize campaigns for peak performance, providing regular reports on your consistent lead flow. This is where your business transforms from unpredictable to systematically successful.</p>
                 </div>
               </div>
             </div>
@@ -158,196 +380,132 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="section-padding bg-white">
-        <div className="container mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-blue-900 text-center mb-16">
-            Simple, Transparent Pricing
-          </h2>
-          <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Starter */}
-            <div className="pricing-card">
-              <h3 className="text-2xl font-bold text-blue-900 mb-2">STARTER</h3>
-              <div className="text-4xl font-bold text-blue-900 mb-6">
-                $2,000<span className="text-lg text-gray-600">/month</span>
-              </div>
-              <div className="text-lg font-semibold text-gray-700 mb-6">
-                15-25 qualified consultations
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Mobile-first quiz funnel
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Facebook/Google ads (included)
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  CRM setup & automation
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Monthly reporting
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Ad spend included
-                </li>
-              </ul>
-              <a href="#contact" className="btn-primary w-full text-center">
-                Get Started
-              </a>
-            </div>
-
-            {/* Growth */}
-            <div className="pricing-card featured">
-              <h3 className="text-2xl font-bold text-blue-900 mb-2">GROWTH</h3>
-              <div className="text-4xl font-bold text-blue-900 mb-6">
-                $3,500<span className="text-lg text-gray-600">/month</span>
-              </div>
-              <div className="text-lg font-semibold text-gray-700 mb-6">
-                30-45 qualified consultations
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Everything in Starter
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Advanced targeting
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  A/B testing
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Priority support
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Ad spend included
-                </li>
-              </ul>
-              <a href="#contact" className="btn-primary w-full text-center">
-                Get Started
-              </a>
-            </div>
-
-            {/* Scale */}
-            <div className="pricing-card">
-              <h3 className="text-2xl font-bold text-blue-900 mb-2">SCALE</h3>
-              <div className="text-4xl font-bold text-blue-900 mb-6">
-                $5,000<span className="text-lg text-gray-600">/month</span>
-              </div>
-              <div className="text-lg font-semibold text-gray-700 mb-6">
-                50-75 qualified consultations
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Everything in Growth
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Multi-channel campaigns
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Custom audiences
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Dedicated account manager
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Ad spend included
-                </li>
-              </ul>
-              <a href="#contact" className="btn-primary w-full text-center">
-                Get Started
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Social Proof Section */}
-      <section className="section-padding bg-gray-50">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-blue-900 mb-16">
-            Proven Results for Mortgage Professionals
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8 mb-12 fade-in">
-            <div className="bg-white rounded-lg p-8 shadow-lg stats-counter">
-              <div className="text-4xl font-bold text-blue-900 mb-2">87%</div>
-              <p className="text-gray-600">Average show-up rate for booked consultations</p>
-            </div>
-            <div className="bg-white rounded-lg p-8 shadow-lg stats-counter">
-              <div className="text-4xl font-bold text-blue-900 mb-2">32</div>
-              <p className="text-gray-600">Average consultations per month (Growth plan)</p>
-            </div>
-            <div className="bg-white rounded-lg p-8 shadow-lg stats-counter">
-              <div className="text-4xl font-bold text-blue-900 mb-2">14 days</div>
-              <p className="text-gray-600">Average time to first qualified consultation</p>
-            </div>
-          </div>
-          <div className="bg-white rounded-lg p-8 shadow-lg max-w-2xl mx-auto">
-            <p className="text-lg text-gray-700 italic mb-4">
-              &quot;HNSN Digital delivered 43 qualified consultations in my first month. The quality of leads has been exceptional.&quot;
+      <section id="pricing" className="bg-white/50 backdrop-blur-sm py-24" onMouseEnter={handlePricingView}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold heading-premium mb-6 tracking-tight">
+              All-Inclusive Pricing
+            </h2>
+            <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto font-medium leading-relaxed">
+              Single monthly fee - Ad spend included
             </p>
-            <p className="font-semibold text-blue-900">— Sarah M., Licensed MLO, Texas</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Foundation Plan */}
+            <div className="pricing-card p-8 relative">
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-bold heading-premium mb-3">Foundation</h3>
+                <p className="text-slate-600 font-medium">Perfect for getting started</p>
+              </div>
+              
+              <div className="text-center mb-8">
+                <div className="mb-4">
+                  <span className="text-4xl font-bold heading-premium">$997</span>
+                  <span className="block text-slate-600 text-sm font-medium mt-1">Setup (one-time)</span>
+                </div>
+                <div className="text-center">
+                  <span className="text-3xl font-bold heading-premium">$2,000</span>
+                  <span className="text-slate-600 font-medium">/month</span>
+                  <p className="text-sm text-slate-500 mt-2">includes ~$1,000 ad budget</p>
+                </div>
+              </div>
+              
+              <button onClick={openCalendly} className="btn-primary w-full py-3 mb-6">
+                Get Started
+              </button>
+            </div>
+
+            {/* Growth Plan */}
+            <div className="pricing-card featured p-8 relative">
+              <div className="text-center mb-8">
+                <div className="popular-badge mb-4">MOST POPULAR</div>
+                <h3 className="text-2xl font-bold heading-premium mb-3">Growth</h3>
+                <p className="text-slate-600 font-medium">Ideal for scaling MLOs</p>
+              </div>
+              
+              <div className="text-center mb-8">
+                <div className="mb-4">
+                  <span className="text-4xl font-bold heading-premium">$1,497</span>
+                  <span className="block text-slate-600 text-sm font-medium mt-1">Setup (one-time)</span>
+                </div>
+                <div className="text-center">
+                  <span className="text-3xl font-bold heading-premium">$3,500</span>
+                  <span className="text-slate-600 font-medium">/month</span>
+                  <p className="text-sm text-slate-500 mt-2">includes ~$1,750 ad budget</p>
+                </div>
+              </div>
+              
+              <button onClick={openCalendly} className="btn-primary w-full py-3 mb-6">
+                Get Started
+              </button>
+            </div>
+
+            {/* Scale Plan */}
+            <div className="pricing-card p-8 relative">
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-bold heading-premium mb-3">Scale</h3>
+                <p className="text-slate-600 font-medium">Maximum lead volume</p>
+              </div>
+              
+              <div className="text-center mb-8">
+                <div className="mb-4">
+                  <span className="text-4xl font-bold heading-premium">$2,497</span>
+                  <span className="block text-slate-600 text-sm font-medium mt-1">Setup (one-time)</span>
+                </div>
+                <div className="text-center">
+                  <span className="text-3xl font-bold heading-premium">$5,000</span>
+                  <span className="text-slate-600 font-medium">/month</span>
+                  <p className="text-sm text-slate-500 mt-2">includes ~$2,500 ad budget</p>
+                </div>
+              </div>
+              
+              <button onClick={openCalendly} className="btn-primary w-full py-3 mb-6">
+                Get Started
+              </button>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-slate-600 font-medium">
+              ✓ 3-month minimum commitment ✓ Full transparency ✓ NMLS compliant
+            </p>
           </div>
         </div>
       </section>
+
 
       {/* FAQ Section */}
-      <section className="section-padding bg-white">
-        <div className="container mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-blue-900 text-center mb-16">
-            Frequently Asked Questions
-          </h2>
-          <div className="max-w-3xl mx-auto space-y-4">
+      <section id="faq" className="gradient-subtle py-24">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold heading-premium mb-6 tracking-tight">
+              Frequently Asked Questions
+            </h2>
+          </div>
+
+          <div className="space-y-6">
             {[
               {
-                question: "What&apos;s included in the ad spend?",
-                answer: "All advertising costs for Facebook and Google campaigns are included in your monthly fee. We typically allocate $1,500-$3,000+ in ad spend depending on your plan and market conditions."
+                question: "How soon will I see leads?",
+                answer: "Typically within 7-14 days after ad campaign launch."
               },
               {
-                question: "How do you qualify leads?",
-                answer: "Our quiz funnel pre-qualifies prospects based on location, credit score, purchase timeline, and loan amount. Only prospects meeting your criteria make it to your calendar."
+                question: "What&apos;s the commitment?",
+                answer: "Initial funnel setup is one-time; monthly ad management is a 3-month minimum commitment to allow for optimization."
               },
               {
-                question: "What&apos;s the 3-month commitment?",
-                answer: "We require a 3-month minimum commitment to allow time for optimization and consistent results. Most clients see their best performance in months 2-3."
+                question: "Do you guarantee X leads?",
+                answer: "We guarantee expert campaign management and continuous optimization, leveraging your included ad budget. Lead volume depends on market competitiveness."
               },
               {
-                question: "How fast will I see results?",
-                answer: "Most clients receive their first qualified consultation within 7-14 days. Full optimization typically occurs within the first month."
-              },
-              {
-                question: "Do you work with MLOs in all states?",
-                answer: "Yes, we work with licensed mortgage loan officers in all 50 states. Our targeting ensures prospects are only from your licensed states."
+                question: "Can you integrate with my CRM?",
+                answer: "Lead forms route to your email; we will explore webhook integrations for popular CRMs with higher plans."
               }
             ].map((faq, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg">
-                <button
-                  className="w-full text-left p-6 flex justify-between items-center hover:bg-gray-50"
-                  onClick={() => toggleFaq(index)}
-                >
-                  <span className="font-semibold text-blue-900">{faq.question}</span>
-                  <span className="text-2xl text-blue-900">
-                    {openFaq === index ? '−' : '+'}
-                  </span>
-                </button>
-                {openFaq === index && (
-                  <div className="px-6 pb-6">
-                    <p className="text-gray-600">{faq.answer}</p>
-                  </div>
-                )}
+              <div key={index} className="card p-6 hover:shadow-premium-lg transition-all duration-300">
+                <h3 className="text-lg font-bold heading-premium mb-3">{faq.question}</h3>
+                <p className="text-slate-600 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -355,48 +513,53 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section id="contact" className="section-padding bg-blue-900 text-white">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-            Ready to Fill Your Calendar with Qualified Consultations?
+      <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-24 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tight">
+            Ready to Stop Chasing Loans?
           </h2>
-          <p className="text-xl mb-8 text-blue-100 max-w-2xl mx-auto">
-            Book a strategy call to discuss your goals and see if we&apos;re a good fit.
+          <p className="text-xl md:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto font-medium leading-relaxed">
+            Start attracting pre-qualified mortgage consultations on repeat with our proven system.
           </p>
-          <a 
-            href="mailto:hello@hnsndigital.com"
-            className="inline-block bg-yellow-400 text-blue-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-yellow-300 transition-colors"
-          >
-            Book Strategy Call
-          </a>
-          <p className="mt-4 text-blue-200">
-            Or email us at hello@hnsndigital.com
-          </p>
+          
+          <button onClick={openCalendly} className="btn-secondary text-base font-semibold py-4 px-8">
+            Book Your Free Strategy Session
+          </button>
+          <p className="text-sm text-slate-400 mt-6 font-medium">✓ NMLS compliant ✓ 7-day launch guarantee ✓ Free consultation</p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 bg-gray-900 text-white">
-        <div className="container mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">HNSN Digital</h3>
-              <p className="text-gray-400">Mortgage Appointment Engine</p>
+      <footer className="bg-white/80 backdrop-blur-sm border-t border-slate-200/60 py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="flex items-center justify-center mb-8">
+              <div className="w-9 h-9 bg-gradient-to-br from-slate-900 to-slate-700 rounded-xl flex items-center justify-center mr-3 shadow-lg">
+                <span className="text-white font-bold text-sm">H</span>
+              </div>
+              <span className="text-xl font-semibold heading-premium tracking-tight">HNSN Digital</span>
             </div>
-            <div>
-              <h4 className="font-semibold mb-4">Contact</h4>
-              <p className="text-gray-400">hello@hnsndigital.com</p>
+            <p className="text-slate-600 mb-8 max-w-2xl mx-auto font-medium leading-relaxed">
+              Business-critical lead generation services for mortgage loan officers. 
+              From funnel to leads in just 7 days.
+            </p>
+            <div className="flex justify-center space-x-8 mb-8">
+              <a href="#" className="text-slate-500 hover:text-slate-900 text-sm font-medium transition-colors duration-200">
+                Privacy Policy
+              </a>
+              <a href="#" className="text-slate-500 hover:text-slate-900 text-sm font-medium transition-colors duration-200">
+                Terms of Service
+              </a>
             </div>
-            <div>
-              <h4 className="font-semibold mb-4">Legal</h4>
-              <p className="text-gray-400 text-sm">
-                NMLS Disclaimer: This is a marketing service for licensed mortgage professionals. 
-                Equal Housing Opportunity.
-              </p>
-            </div>
-          </div>
-          <div className="border-t border-gray-700 pt-8 text-center text-gray-400">
-            <p>© 2025 HNSN Digital. All rights reserved.</p>
+            <p className="text-slate-400 text-sm">
+              NMLS Disclaimer: This is a marketing service for licensed mortgage professionals. Equal Housing Opportunity.
+            </p>
           </div>
         </div>
       </footer>
